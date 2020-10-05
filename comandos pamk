@@ -1,0 +1,39 @@
+#pamk quantidade
+libs<-c("pheatmap","Rtsne","reshape","ggplot2","tidyr","factoextra","Rtsne","tidyverse","dbscan","ggrepel","fpc")
+lapply(libs, require, character.only = TRUE)
+rm(libs)
+set.seed(12345)
+
+data<-read.table("tabela_contagens.csv", sep=",", header=TRUE, row.names=1)
+
+pca = prcomp(t(data));
+plot(pca$x[1:39,1:2], pch = 16)
+
+pamx = pamk(pca$x[1:39,1:2],krange=2:20,criterion="asw", usepam=TRUE, scaling=FALSE, alpha=0.001, diss=inherits(data, "dist"), critout=FALSE, ns=10, seed=NULL);
+plot(pamx$pamobject)
+
+autoplot(pamx$pamobject,
+         frame=TRUE,
+         frame.type = "norm",
+         loadings.label.colour = "black",
+         label= TRUE)
+#pank presença ou ausência
+libs<-c("pheatmap","Rtsne","reshape","ggplot2","tidyr","factoextra","Rtsne","tidyverse","dbscan","ggrepel","fpc")
+lapply(libs, require, character.only = TRUE)
+rm(libs)
+set.seed(12345)
+
+data<-read.table("tabela_presenca-ausencia.csv", sep=",", header=TRUE, row.names=1)
+
+pca = prcomp(t(data));
+plot(pca$x[1:39,1:2], pch = 16)
+
+pamx = pamk(pca$x[1:39,1:2],krange=2:20,criterion="asw", usepam=TRUE, scaling=FALSE, alpha=0.001, diss=inherits(data, "dist"), critout=FALSE, ns=10, seed=NULL);
+plot(pamx$pamobject)
+
+autoplot(pamx$pamobject,
+         frame=TRUE,
+         frame.type = "norm",
+         loadings.label.colour = "black",
+         label= TRUE)
+
